@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>John Rosen, MD</title>
+<meta name="description" content="John Rosen, MD — pediatric gastroenterologist working at the intersection of clinical care and technology." />
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root {
+    --paper: #F6F8F7;
+    --ink: #12221D;
+    --muted: #4E635D;
+    --brand: #0B5D52;
+    --signal: #C98A2B;
+    --hairline: #D9E2DE;
+    --card: #FFFFFF;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* --- Nav --- */
+  nav.wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 28px;
+    padding-bottom: 28px;
+  }
+
+  .nav-name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+  }
+
+  .nav-links { display: flex; gap: 18px; }
+
+  .nav-links a {
+    text-decoration: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .nav-links a:hover { color: var(--brand); border-color: var(--brand); }
+
+  /* --- Hero --- */
+  header.hero {
+    padding: 48px 0 8px;
+  }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--brand);
+    font-weight: 500;
+    margin: 0 0 14px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(34px, 6vw, 48px);
+    line-height: 1.08;
+    margin: 0 0 18px;
+    letter-spacing: -0.01em;
+  }
+
+  .subhead {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--muted);
+    max-width: 560px;
+    margin: 0;
+  }
+
+  /* --- Signal divider (signature element) --- */
+  .signal {
+    width: 100%;
+    height: 44px;
+    margin: 44px 0;
+    display: block;
+  }
+
+  .signal path {
+    fill: none;
+    stroke: var(--hairline);
+    stroke-width: 1.5;
+  }
+
+  .signal.hero-signal path {
+    stroke: var(--signal);
+    stroke-dasharray: 620;
+    stroke-dashoffset: 620;
+    animation: draw 1.6s ease-out 0.2s forwards;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .signal.hero-signal path { animation: none; stroke-dashoffset: 0; }
+  }
+
+  @keyframes draw {
+    to { stroke-dashoffset: 0; }
+  }
+
+  /* --- Sections --- */
+  section { padding: 4px 0 8px; }
+
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 24px;
+    margin: 0 0 12px;
+  }
+
+  section p {
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: var(--muted);
+    max-width: 560px;
+    margin: 0 0 20px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--card);
+    background: var(--brand);
+    padding: 10px 18px;
+    border-radius: 8px;
+    transition: background 0.15s ease;
+  }
+
+  .btn:hover { background: #084A42; }
+
+  .btn.secondary {
+    color: var(--brand);
+    background: transparent;
+    border: 1px solid var(--brand);
+  }
+
+  .btn.secondary:hover { background: rgba(11,93,82,0.06); }
+
+  .btn-row { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  /* --- Advisory card --- */
+  .advisory-card {
+    background: var(--card);
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    padding: 24px 26px;
+  }
+
+  .advisory-card .role {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--signal);
+    margin: 0 0 8px;
+  }
+
+  .advisory-card h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 10px;
+  }
+
+  /* --- Elsewhere grid --- */
+  .elsewhere-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  @media (max-width: 540px) {
+    .elsewhere-grid { grid-template-columns: 1fr; }
+  }
+
+  .elsewhere-item {
+    display: block;
+    text-decoration: none;
+    border: 1px solid var(--hairline);
+    border-radius: 10px;
+    padding: 16px 18px;
+    background: var(--card);
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+
+  .elsewhere-item:hover { border-color: var(--brand); transform: translateY(-1px); }
+
+  .elsewhere-item .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .elsewhere-item .value {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  /* --- About-this-page note --- */
+  .purpose-note {
+    border-left: 2px solid var(--hairline);
+    padding-left: 16px;
+    font-size: 14.5px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  footer.wrap {
+    padding: 40px 24px 60px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+
+  <nav class="wrap">
+    <div class="nav-name">JOHN ROSEN, MD</div>
+    <div class="nav-links">
+      <a href="https://x.com/johnmrosen">Twitter/X</a>
+      <a href="https://www.linkedin.com/in/johnmrosen/">LinkedIn</a>
+    </div>
+  </nav>
+
+  <header class="wrap hero">
+    <p class="eyebrow">Pediatric Gastroenterology &middot; Clinical Technology</p>
+    <h1>John Rosen, MD</h1>
+    <p class="subhead">
+      Pediatric gastroenterologist interested in how technology can
+      complement traditional clinical, academic, and administrative work.
+    </p>
+  </header>
+
+  <div class="wrap">
+    <svg class="signal hero-signal" viewBox="0 0 700 44" preserveAspectRatio="none">
+      <path d="M0,22 L260,22 L275,6 L290,38 L305,14 L320,22 L700,22" />
+    </svg>
+  </div>
+
+  <main class="wrap">
+
+    <section>
+      <p class="eyebrow">Featured build</p>
+      <h2>Tracking industry payments to pediatric society leadership</h2>
+      <p>
+        A public dashboard built with Claude and Claude Code, tracking CMS
+        Open Payments (Sunshine Act) data for the officers and boards of
+        national pediatric subspecialty societies &mdash; general, research,
+        and combined totals, broken out by organization and by year.
+      </p>
+      <div class="btn-row">
+        <!-- TODO: replace with your live GitHub Pages dashboard URL -->
+        <a class="btn" href="https://johnmrosen-beep.github.io/openpayments/pediatric-society-payments-dashboard.html">View the dashboard &rarr;</a>
+      </div>
+      <p style="margin-top:28px;">
+        I hadn't written code since BASIC on an Apple IIe in 1989 &mdash;
+        vague memories of moving a triangle around the screen and figuring
+        out how to make the background flash across the color spectrum.
+        This project was a real test of how far I could get by describing
+        what I wanted to Claude, rather than writing it myself.
+      </p>
+      <a class="btn secondary" href="journey.html">Read the full build story &rarr;</a>
+    </section>
+
+    <svg class="signal" viewBox="0 0 700 44" preserveAspectRatio="none">
+      <path d="M0,22 L260,22 L275,6 L290,38 L305,14 L320,22 L700,22" />
+    </svg>
+
+    <section>
+      <p class="eyebrow">Advisory role</p>
+      <div class="advisory-card">
+        <p class="role">Clinical Advisor</p>
+        <h3>Pediatric Technologies &middot; Pooficient</h3>
+        <p style="margin-bottom:10px;">
+          Clinical advisor to Pediatric Technologies, maker of Pooficient
+          &mdash; an app that helps families track childhood constipation
+          and gut-health symptoms between pediatrician visits.
+        </p>
+        <p style="margin-bottom:18px; font-size:13.5px;">
+          This is an ongoing role and includes a financial interest &mdash;
+          disclosed here, fittingly, on a page about payment transparency.
+        </p>
+        <div class="btn-row">
+          <a class="btn" href="https://www.pooficient.com/en">Website &rarr;</a>
+          <a class="btn secondary" href="https://apps.apple.com/us/app/pooficient-ai-kids-gut-health/id6737721413">App Store &rarr;</a>
+        </div>
+      </div>
+    </section>
+
+    <svg class="signal" viewBox="0 0 700 44" preserveAspectRatio="none">
+      <path d="M0,22 L260,22 L275,6 L290,38 L305,14 L320,22 L700,22" />
+    </svg>
+
+    <section>
+      <p class="eyebrow">Publications &amp; other work</p>
+      <h2>Also in progress</h2>
+      <p>A manuscript on the use of generative AI in research is currently underway.</p>
+      <p>
+        Selected publications on technology and GAI in pediatric GI &mdash;
+        <a href="https://pubmed.ncbi.nlm.nih.gov/39243338/">Generative AI in Pediatric Gastroenterology</a>
+        (<em>Curr Gastroenterol Rep</em>, 2024), plus
+        <a href="https://pubmed.ncbi.nlm.nih.gov/40752924/">PMID 40752924</a>,
+        <a href="https://pubmed.ncbi.nlm.nih.gov/37079871/">37079871</a>,
+        <a href="https://pubmed.ncbi.nlm.nih.gov/36976575/">36976575</a>,
+        <a href="https://pubmed.ncbi.nlm.nih.gov/37168904/">37168904</a>, and
+        <a href="https://pubmed.ncbi.nlm.nih.gov/34105388/">34105388</a>
+        &mdash; full citations and abstracts on
+        <a href="https://scholar.google.com/citations?user=LbI4VYsAAAAJ&hl=en&oi=ao">Google Scholar</a>.
+      </p>
+      <p>
+        Also contributing a chapter to the upcoming
+        <a href="https://www.amazon.com/dp/0443366098?lv=shuf&channelId=500&plpRedirect=mhFallback">Authoritative Guide to Chronic Pediatric Abdominal Pain</a>
+        (Saps, Benninga, eds., Academic Press).
+      </p>
+      <p style="font-size:13.5px; font-style:italic;">
+        Also created an NFT titled "work uniform for a pediatric
+        gastroenterologist," currently &mdash; and rightfully &mdash;
+        valued at $0.
+      </p>
+    </section>
+
+    <svg class="signal" viewBox="0 0 700 44" preserveAspectRatio="none">
+      <path d="M0,22 L260,22 L275,6 L290,38 L305,14 L320,22 L700,22" />
+    </svg>
+
+    <section>
+      <p class="eyebrow">Elsewhere</p>
+      <div class="elsewhere-grid">
+        <a class="elsewhere-item" href="https://scholar.google.com/citations?user=LbI4VYsAAAAJ&hl=en&oi=ao">
+          <span class="label">Publications</span>
+          <span class="value">Google Scholar</span>
+        </a>
+        <a class="elsewhere-item" href="https://x.com/johnmrosen">
+          <span class="label">Twitter / X</span>
+          <span class="value">@johnmrosen</span>
+        </a>
+        <a class="elsewhere-item" href="https://www.linkedin.com/in/johnmrosen/">
+          <span class="label">LinkedIn</span>
+          <span class="value">John Rosen</span>
+        </a>
+        <a class="elsewhere-item" href="https://www.archildrens.org/find-a-doctor/John-Rosen-1407073422">
+          <span class="label">Institutional profile</span>
+          <span class="value">Arkansas Children's</span>
+        </a>
+        <a class="elsewhere-item" href="https://medicine.uams.edu/pediatrics/people/john-m-rosen/">
+          <span class="label">Institutional profile</span>
+          <span class="value">UAMS Pediatrics</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="wrap">
+    &copy; <span id="year"></span> John Rosen
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>

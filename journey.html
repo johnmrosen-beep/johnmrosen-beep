@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Building a Transparency Dashboard with Claude &mdash; John Rosen, MD</title>
+<meta name="description" content="A build-journey narrative: learning to use Claude and Claude Code to build a pediatric society payments transparency dashboard, with no coding background." />
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root {
+    --paper: #F6F8F7;
+    --ink: #12221D;
+    --muted: #4E635D;
+    --brand: #0B5D52;
+    --signal: #C98A2B;
+    --hairline: #D9E2DE;
+    --card: #FFFFFF;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--brand); }
+
+  .wrap {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  nav.wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 28px;
+    padding-bottom: 8px;
+  }
+
+  .nav-name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+  }
+
+  .back-link {
+    text-decoration: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .back-link:hover { color: var(--brand); }
+
+  header.hero { padding: 32px 0 8px; }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--brand);
+    font-weight: 500;
+    margin: 0 0 14px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(28px, 5.5vw, 38px);
+    line-height: 1.15;
+    margin: 0 0 8px;
+    letter-spacing: -0.01em;
+  }
+
+  article { padding: 8px 0 60px; }
+
+  article h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 22px;
+    margin: 40px 0 14px;
+  }
+
+  article p {
+    font-size: 15.5px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin: 0 0 16px;
+  }
+
+  article ul {
+    margin: 0 0 16px;
+    padding-left: 20px;
+  }
+
+  article li {
+    font-size: 15.5px;
+    line-height: 1.7;
+    margin-bottom: 8px;
+  }
+
+  article ol {
+    margin: 0 0 16px;
+    padding-left: 22px;
+  }
+
+  article ol li { margin-bottom: 6px; }
+
+  .closing {
+    border-left: 2px solid var(--signal);
+    padding-left: 18px;
+    margin-top: 36px;
+    font-style: italic;
+    color: var(--muted);
+  }
+
+  footer.wrap {
+    padding: 20px 24px 60px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+
+  <nav class="wrap">
+    <div class="nav-name">JOHN ROSEN, MD</div>
+    <a class="back-link" href="index.html">&larr; Back to home</a>
+  </nav>
+
+  <header class="wrap hero">
+    <p class="eyebrow">Build journal</p>
+    <h1>Building a Transparency Dashboard with Claude: What I Learned</h1>
+  </header>
+
+  <article class="wrap">
+
+    <h2>The idea</h2>
+    <p>
+      I generally have interest in applying new technology to my
+      professional interests, and often try out tech "hands-on" to help me
+      understand it better (and potentially to help the patients and
+      families I care for).
+    </p>
+
+    <p><strong>Ongoing and past "tech" projects:</strong></p>
+    <ol>
+      <li>Clinical advisor for <a href="https://www.pooficient.com/en">Pooficient</a> (ongoing, financial interest)</li>
+      <li>Manuscript in progress about use of GAI in research (ongoing &mdash; exciting!)</li>
+      <li>Publications about technology and GAI relevant to my profession/Pediatric Gastroenterology
+        (see <a href="https://scholar.google.com/citations?user=LbI4VYsAAAAJ&hl=en&oi=ao">Google Scholar</a>
+        or PMIDs
+        <a href="https://pubmed.ncbi.nlm.nih.gov/40752924/">40752924</a>,
+        <a href="https://pubmed.ncbi.nlm.nih.gov/39243338/">39243338</a>,
+        <a href="https://pubmed.ncbi.nlm.nih.gov/37079871/">37079871</a>,
+        <a href="https://pubmed.ncbi.nlm.nih.gov/36976575/">36976575</a>,
+        <a href="https://pubmed.ncbi.nlm.nih.gov/37168904/">37168904</a>,
+        <a href="https://pubmed.ncbi.nlm.nih.gov/34105388/">34105388</a>)
+        and a chapter in the upcoming
+        "<a href="https://www.amazon.com/dp/0443366098?lv=shuf&channelId=500&plpRedirect=mhFallback">Authoritative Guide to Chronic Pediatric Abdominal Pain</a>"
+        (Saps, Benninga, eds., Academic Press)</li>
+      <li>Created an NFT ("work uniform for a pediatric gastroenterologist") for fun, and it is rightfully valued at $0</li>
+    </ol>
+
+    <p>
+      Despite interest and some knowledge about digital technologies, I have
+      no coding experience since working on BASIC in the Apple IIe lab in
+      1989. Vague memories of moving a triangle around the screen and
+      figuring out how to make the background flash rapidly across the
+      color spectrum.
+    </p>
+
+    <p>
+      <strong>Recently I started to use Claude (Sonnet 5, High) and Claude
+      Code to address a project that was floating around for the last
+      year.</strong>
+    </p>
+
+    <ul>
+      <li>OpenPayments is a CMS database with reported industry&rarr;clinician payments for research and other activities (consulting, etc).</li>
+      <li>The OpenPayments reporting system is not perfect, and this project was not intended to fix it, nor intended to comment on individual activities &mdash; only as a way to visualize data more easily.</li>
+      <li>The question I considered was whether Claude Code could help me visualize payments to professional organization leadership in aggregate (all the officers at once).</li>
+      <li>The problem with doing this manually, as far as I tried, was that it required individual identification of leaders and input of their information into the (pretty well-made) online OpenPayments portal.</li>
+      <li>OR the entire database can be downloaded and a local search run, but it is unwieldy/huge and still requires re-download when new data is published.</li>
+      <li>So, could I code a process to obtain this data and visualize it, and how could Claude Code assist?</li>
+    </ul>
+
+    <p>
+      I wanted to see, in one place, how much industry money flows to the
+      people leading national pediatric subspecialty societies &mdash;
+      NASPGHAN, ASPHO, PIDS, and others &mdash; broken out by general
+      versus research payments, using CMS's public Open Payments (Sunshine
+      Act) data.
+    </p>
+
+    <p>
+      I decided to see how far I could get by describing what I wanted
+      rather than writing the code myself &mdash; working with Claude first
+      in a chat interface, then handing off to Claude Code once the project
+      needed real internet access.
+    </p>
+
+    <h2>Phase 1: Prototyping with fake data first</h2>
+    <p>
+      Before touching any real data, I built a working dashboard using
+      realistic <em>placeholder</em> numbers: a year-comparison bar chart
+      across organizations, and a per-organization trend view over time.
+      That let me react to the actual look and feel of the thing &mdash;
+      the layout, the colors, the chart types &mdash; without worrying
+      about the actual data.
+    </p>
+
+    <h2>Phase 2: Defining "who counts"</h2>
+    <p>
+      This turned out to be harder than the charts. "Officers of pediatric
+      subspecialty societies" needed to be parsed &mdash; who of the listed
+      officers should be included (at-large, past-president, etc). I
+      settled on full boards/councils, tracked across their complete
+      payment history in the time assessed, regardless of exact tenure with
+      the organization. This is imperfect, but a reasonable tradeoff given
+      that organizations only publish <em>current</em> leadership online.
+    </p>
+
+    <h2>Phase 3: Collecting rosters</h2>
+    <p>
+      I gave Claude the leadership pages for seven organizations. It pulled
+      65 individual names and titles, and there was one major error related
+      to website layout &mdash; the names pulled were completely incorrect,
+      but Claude was able to fix the problem when redirected. Another
+      example of using AI as a tool, not as the end-all (humans are still
+      important for the process).
+    </p>
+
+    <h2>Phase 4: Matching names to a stable identifier</h2>
+    <p>
+      Physician names alone aren't enough to pull clean records, especially
+      when the name listed on an org webpage might not equal an official or
+      legal name. CMS explicitly recommends matching by NPI (National
+      Provider Identifier) instead. We piloted this on the smallest board
+      first (7 people) before scaling up &mdash; matches came back with old
+      addresses, with multiple potential matching NPIs (same name), with
+      "Pediatrics" but not the pediatric subspecialty listed in the
+      taxonomy identifier. This is an issue with scale and reproducibility,
+      and requires a bit of manual intervention. I told Claude to exclude
+      officers specifically if they were (1) not practicing in the United
+      States (no NPI, no Open Payments record), or (2) not an MD/DO or
+      APRN (several PhDs, again without an NPI or Open Payments record),
+      and to use taxonomy matches against professional organization to
+      deduce the right person when multiple name matches existed. Even
+      though Claude worked through all of this, it was definitely helped by
+      a human who understood some of the rules to apply.
+    </p>
+
+    <h2>Phase 5: Hitting a real technical wall</h2>
+    <p>
+      Trying to pull the actual payment records into Claude hit a
+      limit &mdash; the Claude interface stopped the type of approach we
+      were taking (the way it was conducting API queries). Rather than work
+      around it, we moved everything &mdash; rosters, matched NPIs, all the
+      problems found so far &mdash; into a brief for Claude Code. Claude
+      Code has "real" internet access and could appropriately contact and
+      use the Open Payments API and the NPPES (NPI) registry as needed.
+      Plus a lot of debugging that I don't really understand. In this case,
+      Claude saw its own limit and directed me to Claude Code appropriately.
+      This also resulted in installing some software to get the job done
+      (Claude Code, Python, Git).
+    </p>
+
+    <h2>Phase 6: Finishing in Claude Code</h2>
+    <p>
+      This was in a language I have minimal proficiency in. Summarized in a
+      project brief that Claude Code created &mdash; but actually a very
+      nice step-by-step process. I asked questions about terms, steps,
+      where to find files &mdash; probably very basic for someone who
+      codes, but Claude Code was patient with me, and I know a bit more now
+      than when I started.
+    </p>
+
+    <h2>Phase 7: Going live</h2>
+    <p>
+      The last step was turning the working dashboard into something
+      publicly reachable. Since it's free and seemingly very functional, I
+      used a GitHub Actions workflow that automatically builds and deploys
+      the site to GitHub Pages every time I push a change. Claude told me
+      how to do this step by step, and it only took a couple of tries.
+      After the second failure I asked Claude Code where I went wrong, and
+      it found the error (something about a .git repo and a deploy.yml it
+      didn't recall setting up, and a generic Node.js/Vite template that
+      didn't match the project at all), then fixed it.
+    </p>
+
+    <h2>What I'd tell someone starting out</h2>
+    <p>
+      Go for it. The best part (for me) about GAI tools and other digital
+      technology is that they are breaking down the barriers. Information
+      is more accessible than ever, and while technical skills are still
+      invaluable(!!), modern tools make it possible for "tech-interested"
+      people like myself to do work that would have been long and
+      difficult just a few years ago. From start to finish, this took two
+      weekdays of spare time, only. If you have an idea, ask GAI how to
+      accomplish it. Then ask more questions.
+    </p>
+
+    <p class="closing">
+      Keep going down the rabbit hole and you might be surprised what comes
+      out the other side (my cliche, not Claude's).
+    </p>
+
+  </article>
+
+  <footer class="wrap">
+    &copy; <span id="year"></span> John Rosen &middot; <a href="index.html">Back to home</a>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
