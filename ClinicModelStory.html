@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Building a Clinic Scheduling Model &mdash; John Rosen, MD</title>
+<meta name="description" content="A build-journey narrative: using Claude and Claude Code to model clinic scheduling strategy and RVU production for a pediatric GI practice." />
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root {
+    --paper: #F6F8F7;
+    --ink: #12221D;
+    --muted: #4E635D;
+    --brand: #0B5D52;
+    --signal: #C98A2B;
+    --hairline: #D9E2DE;
+    --card: #FFFFFF;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--brand); }
+
+  .wrap {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  nav.wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 28px;
+    padding-bottom: 8px;
+  }
+
+  .nav-name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+  }
+
+  .back-link {
+    text-decoration: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .back-link:hover { color: var(--brand); }
+
+  header.hero { padding: 32px 0 8px; }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--brand);
+    font-weight: 500;
+    margin: 0 0 14px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(28px, 5.5vw, 38px);
+    line-height: 1.15;
+    margin: 0 0 8px;
+    letter-spacing: -0.01em;
+  }
+
+  .subtitle {
+    font-style: italic;
+    color: var(--muted);
+    font-size: 15.5px;
+    margin: 10px 0 0;
+  }
+
+  article { padding: 8px 0 60px; }
+
+  article h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 22px;
+    margin: 40px 0 14px;
+  }
+
+  article p {
+    font-size: 15.5px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin: 0 0 16px;
+  }
+
+  article ul {
+    margin: 0 0 16px;
+    padding-left: 20px;
+  }
+
+  article li {
+    font-size: 15.5px;
+    line-height: 1.7;
+    margin-bottom: 8px;
+  }
+
+  .closing {
+    border-left: 2px solid var(--signal);
+    padding-left: 18px;
+    margin-top: 36px;
+    font-style: italic;
+    color: var(--muted);
+  }
+
+  footer.wrap {
+    padding: 20px 24px 60px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+
+  <nav class="wrap">
+    <div class="nav-name">JOHN ROSEN, MD</div>
+    <a class="back-link" href="index.html">&larr; Back to home</a>
+  </nav>
+
+  <header class="wrap hero">
+    <p class="eyebrow">Build journal</p>
+    <h1>Building a Clinic Scheduling Model for Pediatric Gastroenterology</h1>
+    <p class="subtitle">A spreadsheet that became a tool leadership can actually use &mdash; and a few things it taught me along the way.</p>
+  </header>
+
+  <article class="wrap">
+
+    <h2>Purpose</h2>
+    <p>
+      Our pediatric gastroenterology division recently adopted a new
+      practice plan, which changes how physician effort and clinic time
+      translate into financial outcomes for the department. I wanted to
+      understand, in concrete terms, how our clinic schedule affects that
+      math &mdash; not to chase revenue for its own sake, but so that
+      leadership could make informed, deliberate choices about how we
+      structure our two clinic types: general GI visits, and a specialty
+      clinic (motility) that runs longer, more complex follow-up visits.
+      Rather than debating this with gut feel and anecdotes, I wanted a
+      tool that could answer "what if we ran it differently?" honestly,
+      with real numbers.
+    </p>
+
+    <h2>The Process</h2>
+    <p>
+      I started small: a spreadsheet. Medicare's time-based billing rules
+      assign a specific "work RVU" &mdash; a standardized unit
+      representing physician effort &mdash; to each visit-complexity
+      billing code, along with a required minimum number of minutes to
+      bill at that level. Using those actual rules, I built a model of
+      exactly how much production a clinic session could generate, given
+      our real slot lengths and patient mix.
+    </p>
+    <p>
+      That first version was intentionally rough &mdash; a placeholder
+      50/50 split between two common billing levels, just to get the
+      structure right. Once the foundation worked, I kept making it more
+      honest, one layer at a time:
+    </p>
+    <ul>
+      <li>Replaced the placeholder billing-level split with the ability
+        to enter our <em>actual</em> distribution across all five
+        visit-complexity levels, once that data was available.</li>
+      <li>Added our historical no-show rate, since a slot on the calendar
+        isn't the same as a completed, billable visit.</li>
+      <li>Turned the static spreadsheet into an interactive web tool, so
+        department leadership could adjust assumptions themselves and
+        watch the numbers respond, instead of asking me to re-run a
+        spreadsheet every time a question came up.</li>
+      <li>Generalized the "motility" clinic into a flexible "specialty
+        clinic" concept, since the same structure could describe any
+        second clinic type, not just this one.</li>
+      <li>Added the ability to export a clean Excel file or a one-page
+        PDF summary, so results could be shared in a meeting without
+        anyone needing to touch the live tool.</li>
+      <li>Solved a practical problem: how do you let someone save their
+        specific set of assumptions without standing up a server or
+        database? The answer was to encode everything directly into a
+        web link. Open the link, and your exact inputs are right there
+        &mdash; no account, no login, and no way for one person's data to
+        ever be visible to another.</li>
+    </ul>
+
+    <h2>Barriers Along the Way</h2>
+    <p>
+      The most interesting obstacle wasn't technical &mdash; it was a
+      discovery the model itself surfaced. Medicare's time-based billing
+      rules require a minimum number of minutes to bill at a given
+      complexity level. When I checked our shorter clinic template
+      against those minimums, I found that some higher-complexity visits
+      simply don't fit inside the scheduled time, at least not without
+      work happening outside the visit itself. That's not a hypothetical
+      concern &mdash; it has real implications for both compliance and
+      revenue, and it only became visible once the numbers were laid out
+      precisely.
+    </p>
+    <p>
+      There was also a more values-based tension. The model can reliably
+      show that one clinic type produces more revenue per hour than the
+      other. But a good tool shouldn't quietly nudge someone toward
+      cutting a clinical service just because it scores lower on one
+      financial metric &mdash; access to specialty care matters too. I
+      made a point of keeping that tension visible rather than letting
+      the tool resolve it silently.
+    </p>
+    <p>
+      A few more ordinary obstacles came up along the way: a data gap
+      around facility billing that I couldn't responsibly model without
+      more information from our hospital's billing office, so I flagged
+      it explicitly as unknown rather than guessing at a number. And,
+      while adding a new export feature, I introduced &mdash; and later
+      caught &mdash; a small bug where certain punctuation displayed
+      incorrectly in one view. A good reminder that even a fairly simple
+      tool needs to be checked carefully, not trusted just because it
+      runs.
+    </p>
+
+    <h2>What I Learned</h2>
+    <p>
+      Turning an assumption into a number is a forcing function. Saying a
+      clinic's visits are "usually a level 3 or 4" feels precise enough
+      in conversation, but building that into an actual calculation
+      exposes exactly how much that vagueness was hiding &mdash; in this
+      case, a real structural mismatch in our clinic template that no one
+      had flagged before.
+    </p>
+    <p>
+      I also learned that financial and clinical priorities don't have to
+      be reconciled by the tool itself. A model's job is to make
+      trade-offs visible and honest, not to make the decision for you.
+    </p>
+    <p>
+      Finally, this project changed my sense of what's possible to build
+      without a traditional engineering background. Using AI-assisted
+      coding tools, I went from a spreadsheet to a working, shareable web
+      application, iterating in the same conversation as the underlying
+      clinical and financial questions themselves. That said, a tool is
+      only as trustworthy as the verification behind it &mdash; I
+      cross-checked the math by hand and against a second, independent
+      model at every step, and I'd encourage anyone doing something
+      similar to do the same.
+    </p>
+
+    <p class="closing">
+      <a href="https://github.com/johnmrosen-beep/pediatric-gi-rvu-model">View the project &rarr;</a>
+    </p>
+
+  </article>
+
+  <footer class="wrap">
+    &copy; <span id="year"></span> John Rosen &middot; <a href="index.html">Back to home</a>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
