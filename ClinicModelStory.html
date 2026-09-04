@@ -148,15 +148,15 @@
 
     <h2>Purpose</h2>
     <p>
-      Our pediatric gastroenterology division recently adopted a new
+      Our pediatric department recently adopted a new physician
       practice plan, which changes how physician effort and clinic time
       translate into financial outcomes for the department. I wanted to
       understand, in concrete terms, how our clinic schedule affects that
       math &mdash; not to chase revenue for its own sake, but so that
-      leadership could make informed, deliberate choices about how we
-      structure our two clinic types: general GI visits, and a specialty
-      clinic (motility) that runs longer, more complex follow-up visits.
-      Rather than debating this with gut feel and anecdotes, I wanted a
+      we could make informed, deliberate choices about how we
+      structure our different clinic types: for instance general GI visits, 
+      and a specialty clinic (motility) that includes generally longer, complex 
+      follow-up visits. Rather than debating this with gut feel and anecdotes, I wanted a
       tool that could answer "what if we ran it differently?" honestly,
       with real numbers.
     </p>
@@ -166,25 +166,25 @@
       I started small: a spreadsheet. Medicare's time-based billing rules
       assign a specific "work RVU" &mdash; a standardized unit
       representing physician effort &mdash; to each visit-complexity
-      billing code, along with a required minimum number of minutes to
-      bill at that level. Using those actual rules, I built a model of
-      exactly how much production a clinic session could generate, given
-      our real slot lengths and patient mix.
+      billing code, along with a required minimum number of minutes or 
+      complexity of decision making to bill at that level. Using those actual
+      rules, I built a model of exactly how much production a clinic session 
+      could generate, given our real slot lengths and patient mix.
     </p>
     <p>
       That first version was intentionally rough &mdash; a placeholder
       50/50 split between two common billing levels, just to get the
       structure right. Once the foundation worked, I kept making it more
-      honest, one layer at a time:
+      true-to-life, one layer at a time:
     </p>
     <ul>
       <li>Replaced the placeholder billing-level split with the ability
         to enter our <em>actual</em> distribution across all five
         visit-complexity levels, once that data was available.</li>
-      <li>Added our historical no-show rate, since a slot on the calendar
+      <li>Added an option for no-show rate, since a slot on the calendar
         isn't the same as a completed, billable visit.</li>
       <li>Turned the static spreadsheet into an interactive web tool, so
-        department leadership could adjust assumptions themselves and
+        department members could adjust assumptions themselves and
         watch the numbers respond, instead of asking me to re-run a
         spreadsheet every time a question came up.</li>
       <li>Generalized the "motility" clinic into a flexible "specialty
@@ -203,19 +203,7 @@
 
     <h2>Barriers Along the Way</h2>
     <p>
-      The most interesting obstacle wasn't technical &mdash; it was a
-      discovery the model itself surfaced. Medicare's time-based billing
-      rules require a minimum number of minutes to bill at a given
-      complexity level. When I checked our shorter clinic template
-      against those minimums, I found that some higher-complexity visits
-      simply don't fit inside the scheduled time, at least not without
-      work happening outside the visit itself. That's not a hypothetical
-      concern &mdash; it has real implications for both compliance and
-      revenue, and it only became visible once the numbers were laid out
-      precisely.
-    </p>
-    <p>
-      There was also a more values-based tension. The model can reliably
+      A values-based tension came to the surface. The model can reliably
       show that one clinic type produces more revenue per hour than the
       other. But a good tool shouldn't quietly nudge someone toward
       cutting a clinical service just because it scores lower on one
@@ -241,24 +229,25 @@
       clinic's visits are "usually a level 3 or 4" feels precise enough
       in conversation, but building that into an actual calculation
       exposes exactly how much that vagueness was hiding &mdash; in this
-      case, a real structural mismatch in our clinic template that no one
-      had flagged before.
+      case, a real structural mismatch in our clinic templates and some 
+      considerations for change.
     </p>
     <p>
-      I also learned that financial and clinical priorities don't have to
-      be reconciled by the tool itself. A model's job is to make
+      It also reinforced that financial and clinical priorities don't have to
+      be reconciled by a tool itself. A model's job is to make
       trade-offs visible and honest, not to make the decision for you.
     </p>
     <p>
       Finally, this project changed my sense of what's possible to build
-      without a traditional engineering background. Using AI-assisted
-      coding tools, I went from a spreadsheet to a working, shareable web
-      application, iterating in the same conversation as the underlying
-      clinical and financial questions themselves. That said, a tool is
-      only as trustworthy as the verification behind it &mdash; I
-      cross-checked the math by hand and against a second, independent
-      model at every step, and I'd encourage anyone doing something
-      similar to do the same.
+      with very little knowledge but at least moderate interest and willingness 
+      to repeatedly mess up. Using AI-assisted coding tools, I went from a 
+      spreadsheet to a working, shareable web application, iterating in the same 
+      conversation as the underlying clinical and financial questions themselves. 
+      That said, a tool is only as trustworthy as the data and model behind it &mdash;
+      I'd encourage taking all of this with a grain of salt, and using this type of data 
+      as only a piece of the puzzle that is being worked on.  I imagine the finance department
+      has much more sophisticated and complete methods of evaluating clinic models and projecting
+      outcomes from change, but tools like these can at least help with initial exploration.
     </p>
 
     <p class="closing">
