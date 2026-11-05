@@ -174,6 +174,10 @@
 
   .btn-row { display: flex; gap: 12px; flex-wrap: wrap; }
 
+  /* A button whose page isn't public yet: not a link, greyed out. */
+  .btn.disabled,
+  .btn.disabled:hover { color: #4B5563; background: #E5E7EB; border-color: #E5E7EB; cursor: default; }
+
   /* --- Advisory card --- */
   .advisory-card {
     background: var(--card);
@@ -292,14 +296,14 @@
         or try a free demo.
       </p>
       <div class="btn-row">
-        <a class="btn" href="https://johnmrosen-beep.github.io/conference-agenda-digest/">Use the app &rarr;</a>
+        <span class="btn disabled" aria-disabled="true">Coming soon</span>
       </div>
       <p style="margin-top:28px;">
         The part I'll remember: before trusting the AI, we measured it, the same way we'd validate a new
         lab test. This third project had far more real coding structure than the first two, and I learned
         it by doing the same steps over and over.
       </p>
-      <a class="btn secondary" href="ConferenceDigestStory.html">Read the full build story &rarr;</a>
+      <span class="btn secondary disabled" aria-disabled="true">Coming soon</span>
     </section>
 
     <svg class="signal" viewBox="0 0 700 77" preserveAspectRatio="none">
